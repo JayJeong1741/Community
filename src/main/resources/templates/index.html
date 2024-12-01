@@ -133,7 +133,7 @@
 <nav class="navbar">
     <a href="#" class="logo">MJC Community</a>
     <ul class="nav-links">
-        <li><a href="#">홈</a></li>
+        <li><a th:href="@{/}">홈</a></li>
         <li th:unless="${session.user}"><a th:href="@{/user/login}">Login</a></li>
         <li th:if="${session.user}"><a th:href="@{/user/profile}"
                                        th:text="${session.user.firstName}"></a></li>
