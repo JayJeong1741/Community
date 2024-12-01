@@ -1,0 +1,30 @@
+<!DOCTYPE html>
+<html th:replace="~{layouts/base::html(main=~{::main})}">
+<body>
+<main>
+  <h1>User Detail</h1>
+  <table class="info">
+    <tr>
+      <th>번호</th>
+      <td th:text="${user.id}"></td>
+    </tr>
+    <tr>
+      <th>이메일</th>
+      <td th:text="${user.username}"></td>
+    </tr>
+    <tr>
+      <th>이름</th>
+      <td th:text="${user.firstName}"></td>
+    </tr>
+    <tr>
+      <th>가입일시</th>
+      <td th:text="${user.dateJoinedFormatted}"></td>
+    </tr>
+    <tr>
+      <th>최근 로그인</th>
+      <td th:text="${user.lastLoginFormatted}"></td>
+    </tr>
+  </table>
+</main>
+</body>
+</html>

@@ -1,0 +1,16 @@
+<!doctype html>
+<html th:replace="~{layouts/base::html(main=~{::main})}">
+<body>
+<main>
+    <h1>Profile</h1>
+    <div th:if="${session.user}">
+        <p>username : <span th:text="${session.user.username}"></span></p>
+        <p>password : <span th:text="${session.user.password}"></span></p>
+        <p>firstName : <span th:text="${session.user.firstName}"></span></p>
+    </div>
+    <div th:unless="${session.user}">
+        <p>로그인 하지 않았습니다.</p>
+    </div>
+</main>
+</body>
+</html>

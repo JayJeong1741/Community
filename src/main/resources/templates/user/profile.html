@@ -1,0 +1,33 @@
+<!DOCTYPE html>
+<html th:replace="~{layouts/base::html(main=~{::main})}">
+<body>
+<main>
+    <h1>User Detail</h1>
+    <table class="info" th:object="${session.user}">
+        <tr>
+            <th>번호</th>
+            <td th:text="*{id}"></td>
+        </tr>
+        <tr>
+            <th>이메일</th>
+            <td th:text="*{username}"></td>
+        </tr>
+        <tr>
+            <th>이름</th>
+            <td th:text="*{firstName}"></td>
+        </tr>
+        <tr>
+            <th>가입일시</th>
+            <td th:text="*{dateJoinedFormatted}"></td>
+        </tr>
+        <tr>
+            <th>최근 로그인</th>
+            <td th:text="*{lastLoginFormatted}"></td>
+        </tr>
+    </table>
+    <form th:action="@{/user/logout}" method="post">
+        <p><button type="submit">Logout</button></p>
+    </form>
+</main>
+</body>
+</html>

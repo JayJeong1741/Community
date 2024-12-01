@@ -1,0 +1,19 @@
+<!doctype html>
+<html th:replace="~{layouts/base::html(main=~{::main})}">
+<body>
+<main>
+    <h1>User model</h1>
+    <h3>Request parameters</h3>
+    <p>username : <span th:text="${param.username}"></span></p>
+    <p>password : <span th:text="${param.password}"></span></p>
+    <p>firstName : <span th:text="${param.firstName}"></span></p>
+
+    <div th:if="${user}">
+        <h3>Model attributes</h3>
+        <p>username : <span th:text="${user.username}"></span></p>
+        <p>password : <span th:text="${user.password}"></span></p>
+        <p>firstName : <span th:text="${user.firstName}"></span></p>
+    </div>
+</main>
+</body>
+</html>

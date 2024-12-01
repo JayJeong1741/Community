@@ -1,0 +1,62 @@
+<!doctype html>
+<html th:replace="~{layouts/base::html(main=~{::main})}">
+<body>
+<main>
+    <h1>Handler methods examples</h1>
+    <form id="form1">
+        <fieldset>
+            <legend>User 정보</legend>
+            <p><input type="email" name="username" placeholder="username"
+                      required
+                      autofocus/>
+            </p>
+            <p><input type="password" name="password" placeholder="password"
+                      required/>
+            </p>
+            <p><input type="text" name="firstName" placeholder="firstName"
+                      required/>
+            </p>
+        </fieldset>
+    </form>
+    <div class="flex-container">
+        <div class="flex-column">
+            <h3>Request parameter test</h3>
+            <form id="form2" th:action="@{/handler-methods/request}" method="post">
+                <button type="submit">/handler-methods/request 로 보내기</button>
+            </form>
+            <form id="form3" th:action="@{/handler-methods/requestParam}"
+                  method="post">
+                <button type="submit">/handler-methods/requestParam 으로 보내기</button>
+            </form>
+            <form id="form4" th:action="@{/handler-methods/modelAndView}"
+                  method="post">
+                <button type="submit">/handler-methods/modelAndView 로 보내기</button>
+            </form>
+            <form id="form5" th:action="@{/handler-methods/modelAttribute}"
+                  method="post">
+                <button type="submit">/handler-methods/modelAttribute 로 보내기</button>
+            </form>
+        </div>
+        <div class="flex-column">
+            <h3>HttpSession test</h3>
+            <form id="form6" th:action="@{/handler-methods/login}" method="post">
+                <button type="submit">/handler-methods/login 으로 보내기</button>
+            </form>
+            <p><a th:href="@{/handler-methods/profile}">/handler-methods/profile</a>
+            </p>
+            <form id="form7" th:action="@{/handler-methods/logout}" method="post">
+                <button type="submit">/handler-methods/logout 으로 보내기</button>
+            </form>
+        </div>
+    </div>
+    <script th:inline="javascript">
+        // form1의 엘리먼트들의 form attribute 값을 설정
+        document.querySelectorAll("#form2, #form3, #form4, #form5, #form6")
+            .forEach(form => form.addEventListener('submit', function () {
+                document.querySelectorAll("#form1 input")
+                    .forEach(element => element.setAttribute("form", form.id))
+            }))
+    </script>
+</main>
+</body>
+</html>

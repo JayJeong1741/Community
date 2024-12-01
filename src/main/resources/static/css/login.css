@@ -1,0 +1,144 @@
+body {
+    font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+    margin: 0;
+    padding: 0;
+    background-color: var(--background-color);
+    color: var(--text-color);
+}
+.welcome-header {
+    margin: 45px 0px;
+    text-align: center;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+}
+.welcome-header__title {
+    font-size: 25px;
+    margin-bottom: 20px;
+    font-weight: 545;
+}
+.welcome-header__text {
+    width: 65%;
+    font-size: 15px;
+    opacity: 70%;
+}
+#login-form {
+    display: flex;
+    flex-direction: column;
+    margin: 0px 30px;
+    align-items: center;
+}
+#login-form input {
+    width: 300px;
+    height: 20px;
+    border: none;
+    padding: 10px 0px;
+    font-size: 15px;
+    font-weight: 600;
+    border-bottom: 1px solid rgba(0, 0, 0, 0.2);
+    margin-bottom: 10px;
+    transition: border-color 0.3s ease-in-out;
+}
+.login-form__btn{
+    width: 300px;
+    height: 45px;
+    color: white;
+    align-items: center;
+}
+#login-form input::placeholder {
+    color: rgba(0, 0, 0, 0.5);
+}
+/*만약 버튼을 inpput type="submit"으로 설정했을 시 다음과 같이 설정
+  #login-form input {
+    border: none;
+    padding: 15px 0px;
+    font-size: 15px;
+    margin-bottom: 10px;
+  }
+
+  #login-form input:not ([type="submit"]){
+  border-bottom: 1px solid rgba(0, 0, 0, 0.2);
+  transition: border-color 0.3s ease-in-out;
+  }*/
+#login-form input:focus {
+    border-color: black;
+    border-bottom: 2px solid black;
+}
+.login-form {
+    display: flex;
+    flex-direction: column;
+    margin-top: 10px;
+}
+.maintain-login {
+    margin: 10px 0px;
+    display: flex;
+    flex-direction: row;
+    align-items: center;
+    font-weight: 550;
+}
+.maintain-login label {
+    margin-left: 5px;
+    font-size: 13px;
+}
+.login-form__btn {
+    background-color: #1f4e79;
+    padding: 15px 0px;
+    margin-bottom: 15px;
+    border: none;
+    border-radius: 5px;
+    font-size: 15px;
+    font-weight: 600;
+}
+.login-form__btn__QR {
+    padding: 15px 0px;
+    margin-bottom: 15px;
+    border: none;
+    border-radius: 5px;
+    font-size: 15px;
+    font-weight: 600;
+}
+.or {
+    display: flex;
+    align-items: center;
+    margin-bottom: 15px;
+}
+
+.or__column {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    height: 1px;
+    width: 100vw;
+    background-color: rgba(0, 0, 0, 0.2);
+}
+.or__column span {
+    display: block;
+    background-color: white;
+    color: rgba(0, 0, 0, 0.5);
+    font-size: 12px;
+}
+.setting-id {
+    display: flex;
+    margin: 30px 30px;
+    width: 300px;
+}
+
+.setting-id a {
+    text-decoration: none;
+    color: black;
+    font-size: 13px;
+    opacity: 70%;
+    font-weight: 550;
+
+}
+.stick {
+    margin: 5px 10px;
+    width: 1px;
+    height: 20px;
+    background-color: rgba(0, 0, 0, 0.1);
+}
+.setting-id{
+    align-items: center;
+    justify-content: center;
+}
+

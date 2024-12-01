@@ -1,0 +1,146 @@
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>MJC Community - Community</title>
+    <style>
+        :root {
+            --primary-color: #1f4e79;
+            --secondary-color: #63aad6;
+            --accent-color: #ffffff;
+            --background-color: #f0f8ff;
+            --text-color: #333333;
+            --card-background: #ffffff;
+        }
+
+        body {
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+            margin: 0;
+            padding: 0;
+            background-color: var(--background-color);
+            color: var(--text-color);
+        }
+
+        .navbar {
+            background-color: var(--primary-color);
+            padding: 1rem;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+        }
+
+        .logo {
+            color: var(--accent-color);
+            font-size: 1.5rem;
+            text-decoration: none;
+            font-weight: bold;
+        }
+
+        .nav-links {
+            list-style: none;
+            display: flex;
+            margin: 0;
+            padding: 0;
+        }
+
+        .nav-links li {
+            margin-left: 1rem;
+        }
+
+        .nav-links a {
+            color: var(--accent-color);
+            text-decoration: none;
+            transition: color 0.3s ease;
+        }
+
+        .nav-links a:hover {
+            color: var(--secondary-color);
+        }
+
+        main {
+            max-width: 1200px;
+            margin: 0 auto;
+            padding: 2rem;
+        }
+
+        h2 {
+            color: var(--primary-color);
+            margin-bottom: 1rem;
+        }
+
+        .write-btn {
+            display: inline-block;
+            background-color: var(--primary-color);
+            color: var(--accent-color);
+            padding: 0.5rem 1rem;
+            text-decoration: none;
+            border-radius: 4px;
+            margin-bottom: 1rem;
+        }
+
+        .post-list {
+            display: flex; /* 수평 리스트로 변경 */
+            flex-direction: column; /* 세로 방향으로 나열 */
+            gap: 1rem; /* 카드 간격 */
+        }
+
+        .post-card {
+            background-color: var(--card-background);
+            border-radius: 8px;
+            box-shadow: 0 2px 4px rgba(0,0,0,0.1);
+            padding: 1rem;
+            transition: box-shadow 0.3s ease;
+        }
+
+        .post-card:hover {
+            box-shadow: 0 4px 8px rgba(0,0,0,0.2);
+        }
+
+        .post-title {
+            color: var(--primary-color);
+            font-size: 1.2rem;
+            margin-bottom: 0.5rem;
+            text-decoration: none;
+        }
+
+        .post-info {
+            font-size: 0.9rem;
+            color: #666; /* 회색 텍스트 */
+        }
+
+        .post-author {
+            color: var(--secondary-color);
+            text-decoration: none;
+        }
+    </style>
+</head>
+<body>
+<nav class="navbar">
+    <a href="#" class="logo">MJC Community</a>
+    <ul class="nav-links">
+        <li><a th:href="@{/}">홈</a></li>
+        <li th:if="${session.user}"><a th:href="@{/user/profile}"
+                                       th:text="${session.user.firstName}"></a></li>
+    </ul>
+</nav>
+<main>
+    <h2>커뮤니티</h2>
+    <a th:href="@{/post/create}" class="write-btn">글쓰기</a>
+
+    <div class="post-list">
+        <div th:each="post : ${list}" class="post-card">
+            <a th:href="@{/post/detail(id=${post.id})}" class="post-title" th:text="${post.title}"></a>
+            <div class="post-info">
+                <span th:text="${post.id}"></span> |
+                <a th:text="${post.user.firstName}" th:href="@{/user/detail(id=${post.user.id})}" class="post-author"></a> |
+                <span th:text="${post.pubDateFormatted}"></span>
+            </div>
+        </div>
+    </div>
+
+    <div th:replace="~{layouts/pagenation::p}"></div>
+</main>
+</body>
+</html>

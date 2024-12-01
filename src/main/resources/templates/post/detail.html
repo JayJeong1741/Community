@@ -1,0 +1,166 @@
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Post Detail</title>
+    <style>
+        :root {
+            --primary-color: #1f4e79;
+            --secondary-color: #63aad6;
+            --accent-color: #ffffff;
+            --background-color: #f0f8ff;
+            --text-color: #333333;
+            --button-background: #1f4e79;
+            --button-hover-background: #63aad6;
+            --content-text-color: #666666; /* 회색 내용 텍스트 색상 */
+        }
+
+        body {
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+            margin: 0;
+            padding: 0;
+            background-color: var(--background-color);
+            color: var(--text-color);
+        }
+
+        .navbar {
+            background-color: var(--primary-color);
+            padding: 1rem;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+        }
+
+        .logo {
+            color: var(--accent-color); /* 흰색 */
+            font-size: 1.5rem;
+            text-decoration: none;
+            font-weight: bold;
+        }
+
+        .nav-links {
+            list-style: none;
+            display: flex;
+            margin: 0;
+            padding: 0;
+        }
+
+        .nav-links li {
+            margin-left: 1rem;
+        }
+
+        .nav-links a {
+            color: var(--accent-color); /* 흰색 */
+            text-decoration: none;
+            transition: color 0.3s ease;
+        }
+
+        .nav-links a:hover {
+            color: var(--secondary-color);
+        }
+
+        h2 {
+            color: var(--primary-color);
+            text-align: center; /* 제목 중앙 정렬 */
+        }
+
+        .content-container {
+            background-color: var(--accent-color);
+            border-radius: 8px;
+            padding: 2rem;
+            box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+            max-width: 800px; /* 최대 너비 설정 */
+            margin: 2rem auto; /* 중앙 정렬 및 아래 여백 추가 */
+        }
+
+        .title {
+            font-size: 2rem; /* 제목 크기 조정 */
+            font-weight: bold;
+            color: #000000; /* 제목 검은색 */
+            text-align: center; /* 제목 중앙 정렬 */
+            margin-bottom: 1rem; /* 아래 여백 추가 */
+        }
+
+        .action-links {
+            text-align: left; /* 왼쪽 정렬 */
+            margin-bottom: 1.5rem; /* 아래 여백 추가 */
+        }
+
+        .action-links a,
+        button {
+            margin-right :10px; /* 버튼 간격 추가 */
+        }
+
+        .content-header p {
+            margin :0.5rem 0;
+        }
+
+        .content-header {
+            margin-bottom :1.5rem; /* 아래 여백 추가 */
+        }
+
+        .post-content {
+            font-size :1.1rem; /* 내용 크기 조정 */
+            line-height :1.6; /* 줄 간격 조정 */
+            color : var(--content-text-color); /* 회색 내용 텍스트 색상 */
+        }
+
+        button {
+            background-color : var(--button-background);
+            color : var(--accent-color);
+            border : none;
+            padding :10px 15px;
+            border-radius :5px;
+            cursor : pointer;
+            transition : background-color 0.3s ease;
+        }
+
+        button:hover {
+            background-color : var(--button-hover-background);
+        }
+    </style>
+</head>
+<body>
+<nav class="navbar">
+    <a href="#" class="logo">MJC Community</a>
+    <ul class="nav-links">
+        <li><a th:href="@{/}">홈</a></li>
+        <li th:unless="${session.user}"><a th:href="@{/user/login}">Login</a></li>
+        <li th:if="${session.user}"><a th:href="@{/user/profile}"
+                                       th:text="${session.user.firstName}"></a></li>
+    </ul>
+</nav>
+<main>
+    <h2>Post Detail</h2>
+    <div class="content-container">
+        <p th:text="${post.title}" class="title"></p>
+
+        <div class="action-links">
+            <a th:href="@{/post/list(page=${session.page})}">목록</a>
+            <a th:href="@{/mvc/post/update(id=${post.id})}">수정</a>
+            <form th:action="@{/mvc/post/delete}" method="post" style="display:inline;">
+                <input type="hidden" name="id" th:value="${post.id}"/>
+                <button type="submit">삭제</button>
+            </form>
+        </div>
+
+        <div class="content-header">
+            <p>등록시간 : <span th:text="${post.pubDateFormatted}"></span>,
+                수정시간 : <span th:text="${post.lastModifiedFormatted}"></span>,
+                글쓴이 : <a th:text="${post.user.firstName}" th:href="@{/user/detail(id=${post.user.id})}"></a>
+            </p>
+        </div>
+
+        <p th:text="${post.content}" class="post-content"></p>
+    </div>
+
+    <script>
+        document.forms[0].addEventListener('submit', function (event) {
+            if (!confirm("삭제하시겠습니까?")) event.preventDefault();
+        });
+    </script>
+</main>
+</body>
+</html>

@@ -1,0 +1,37 @@
+<!DOCTYPE html>
+<html lang="ko">
+<link rel="stylesheet" th:href="@{/css/login.css}">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>카카오톡</title>
+</head>
+<body>
+
+<header class="welcome-header">
+    <h1 class="welcome-header__title">MJC Community</h1>
+    <p class="welcome-header__text">동아리 커뮤니티!</p>
+</header>
+
+<form method="post" id="login-form">
+    <input name="username" type="email" required autofocus minlength="6" placeholder="아이디">
+    <input name="password" type="password" required minlength="4" maxlength="14" placeholder="비밀번호">
+    <!--버튼을 input으로 설정했을 시에는(div class="login-form이 없을 때" css파일에 login-form input: not([type="submit"]))으로 type이 submit이 아닐 때 작동 css파일 확인-->
+
+    <div class="login-form">
+        <button class="login-form__btn" type="submit">로그인</button>
+    </div>
+    <div class="setting-id">
+        <p><a th:href="@{/user/signup}">회원가입</a></p>
+        <div class="stick"></div>
+        <div><a id="findId" href="#">아이디 찾기</a></div>
+        <div class="stick"></div>
+        <div><a id="findPasswd" href="#">비밀번호 찾기</a></div>
+    </div>
+</form>
+<p th:if="${param.error}" class="warn">이메일이 없거나 비밀번호가 다릅니다.</p>
+
+<script src="https://kit.fontawesome.com/f33940d59f.js" crossorigin="anonymous"></script>
+</body>
+</html>
