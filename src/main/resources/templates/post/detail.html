@@ -11,9 +11,7 @@
             --accent-color: #ffffff;
             --background-color: #f0f8ff;
             --text-color: #333333;
-            --button-background: #1f4e79;
-            --button-hover-background: #63aad6;
-            --content-text-color: #666666; /* 회색 내용 텍스트 색상 */
+            --border-color: #e0e0e0;
         }
 
         body {
@@ -34,7 +32,7 @@
         }
 
         .logo {
-            color: var(--accent-color); /* 흰색 */
+            color: var(--accent-color);
             font-size: 1.5rem;
             text-decoration: none;
             font-weight: bold;
@@ -52,7 +50,7 @@
         }
 
         .nav-links a {
-            color: var(--accent-color); /* 흰색 */
+            color: var(--accent-color);
             text-decoration: none;
             transition: color 0.3s ease;
         }
@@ -61,64 +59,185 @@
             color: var(--secondary-color);
         }
 
-        h2 {
-            color: var(--primary-color);
-            text-align: center; /* 제목 중앙 정렬 */
-        }
-
-        .content-container {
+        main {
+            max-width: 800px;
+            margin: 2rem auto;
+            padding: 2rem;
             background-color: var(--accent-color);
             border-radius: 8px;
-            padding: 2rem;
-            box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
-            max-width: 800px; /* 최대 너비 설정 */
-            margin: 2rem auto; /* 중앙 정렬 및 아래 여백 추가 */
+            box-shadow: 0 2px 4px rgba(0,0,0,0.1);
         }
 
-        .title {
-            font-size: 2rem; /* 제목 크기 조정 */
-            font-weight: bold;
-            color: #000000; /* 제목 검은색 */
-            text-align: center; /* 제목 중앙 정렬 */
-            margin-bottom: 1rem; /* 아래 여백 추가 */
+        .title-card {
+            background-color: var(--accent-color);
+            border-radius: 8px;
+            padding: 1.5rem;
+            margin-bottom: 1.5rem;
+            text-align: center;
+        }
+
+        .title-card h2 {
+            margin: 0;
+            color: var(--primary-color);
+            font-size: 1.8rem;
         }
 
         .action-links {
-            text-align: left; /* 왼쪽 정렬 */
-            margin-bottom: 1.5rem; /* 아래 여백 추가 */
+            display: flex;
+            justify-content: flex-start;
+            gap: 1rem;
+            margin-bottom: 1.5rem;
         }
 
-        .action-links a,
-        button {
-            margin-right :10px; /* 버튼 간격 추가 */
+        .action-links a, .action-links button {
+            padding: 0.75rem 1.5rem;
+            border: none;
+            border-radius: 4px;
+            font-size: 1rem;
+            cursor: pointer;
+            transition: background-color 0.3s ease;
+            text-decoration: none;
         }
 
-        .content-header p {
-            margin :0.5rem 0;
+        .action-links a {
+            background-color: var(--primary-color);
+            color: var(--accent-color);
+        }
+
+        .action-links a:hover, .action-links button:hover {
+            background-color: var(--secondary-color);
         }
 
         .content-header {
-            margin-bottom :1.5rem; /* 아래 여백 추가 */
+            margin-bottom: 1.5rem;
+            font-size: 0.9rem;
+            color: #666;
         }
 
         .post-content {
-            font-size :1.1rem; /* 내용 크기 조정 */
-            line-height :1.6; /* 줄 간격 조정 */
-            color : var(--content-text-color); /* 회색 내용 텍스트 색상 */
+            font-size: 1.1rem;
+            line-height: 1.6;
+            color: var(--text-color);
         }
 
-        button {
-            background-color : var(--button-background);
-            color : var(--accent-color);
-            border : none;
-            padding :10px 15px;
-            border-radius :5px;
-            cursor : pointer;
-            transition : background-color 0.3s ease;
+        .comments-section {
+            margin-top: 2rem;
+            background-color: #f9f9f9;
+            border-radius: 8px;
+            padding: 1.5rem;
         }
 
-        button:hover {
-            background-color : var(--button-hover-background);
+        .comments-section h3 {
+            color: var(--primary-color);
+            margin-bottom: 1rem;
+            font-size: 1.4rem;
+            border-bottom: 2px solid var(--primary-color);
+            padding-bottom: 0.5rem;
+        }
+
+        .comment-list {
+            list-style: none;
+            padding: 0;
+            margin-bottom: 2rem;
+        }
+
+        .comment-item {
+            background-color: var(--accent-color);
+            border: 1px solid var(--border-color);
+            border-radius: 4px;
+            padding: 1rem;
+            margin-bottom: 1rem;
+            box-shadow: 0 2px 4px rgba(0,0,0,0.05);
+        }
+
+        .comment-content {
+            font-size: 1rem;
+            margin-bottom: 0.5rem;
+        }
+
+        .comment-meta {
+            font-size: 0.8rem;
+            color: #666;
+        }
+
+        .comment-form-container {
+            background-color: #e6f2ff;
+            border-radius: 8px;
+            padding: 1.5rem;
+            margin-top: 2rem;
+        }
+
+        .comment-form-container h4 {
+            color: var(--primary-color);
+            margin-bottom: 1rem;
+            font-size: 1.2rem;
+        }
+
+
+        .comment-form-container {
+            background-color: #e6f2ff;
+            border-radius: 8px;
+            padding: 1.5rem;
+            margin-top: 2rem;
+            display: flex;  /* 추가 */
+            flex-direction: column; /* 추가 */
+            align-items: center; /* 추가 */
+        }
+
+        .comment-form {
+            display: flex;
+            flex-direction: column;
+            width: 100%; /* 추가 */
+            max-width: 600px; /* 추가 */
+            align-items: center; /* 추가 */
+        }
+
+        .comment-form textarea {
+            width: 100%;
+            max-width: 600px; /* 추가 */
+            padding: 0.75rem;
+            border: 1px solid var(--border-color);
+            border-radius: 4px;
+            resize: vertical;
+            min-height: 100px;
+            margin-bottom: 1rem;
+            box-sizing: border-box; /* 추가 */
+        }
+
+        .comment-form button {
+            align-self: center; /* 변경 */
+        }
+
+        .comment-form textarea {
+            width: 100%;
+            padding: 0.75rem;
+            border: 1px solid var(--border-color);
+            border-radius: 4px;
+            resize: vertical;
+            min-height: 100px;
+            margin-bottom: 1rem;
+        }
+
+        .comment-form button {
+            align-self: flex-start;
+            background-color: var(--primary-color);
+            color: var(--accent-color);
+            padding: 0.75rem 1.5rem;
+            border: none;
+            border-radius: 4px;
+            cursor: pointer;
+            transition: background-color 0.3s ease;
+            font-size: 1rem;
+        }
+
+        .comment-form button:hover {
+            background-color: var(--secondary-color);
+        }
+
+        @media (max-width: 600px) {
+            .comment-form-container {
+                padding: 1rem;
+            }
         }
     </style>
 </head>
@@ -128,39 +247,52 @@
     <ul class="nav-links">
         <li><a th:href="@{/}">홈</a></li>
         <li th:unless="${session.user}"><a th:href="@{/user/login}">Login</a></li>
-        <li th:if="${session.user}"><a th:href="@{/user/profile}"
-                                       th:text="${session.user.firstName}"></a></li>
+        <li th:if="${session.user}"><a th:href="@{/user/profile}" th:text="${session.user.firstName}"></a></li>
     </ul>
 </nav>
 <main>
-    <h2>Post Detail</h2>
-    <div class="content-container">
-        <p th:text="${post.title}" class="title"></p>
+    <div class="title-card">
+        <h2 th:text="${post.title}"></h2>
+    </div>
+    <div class="action-links">
+        <a th:href="@{/post/list(page=${session.page})}">목록</a>
+        <a th:href="@{/mvc/post/update(id=${post.id})}">수정</a>
+        <form th:action="@{/mvc/post/delete}" method="post" style="display:inline;">
+            <input type="hidden" name="id" th:value="${post.id}"/>
+            <button type="submit">삭제</button>
+        </form>
+    </div>
+    <div class="content-header">
+        <p>등록시간: <span th:text="${post.pubDateFormatted}"></span> |
+            수정시간: <span th:text="${post.lastModifiedFormatted}"></span> |
+            글쓴이: <a th:href="@{/user/detail(id=${post.user.id})}" th:text="${post.user.firstName}"></a>
+        </p>
+    </div>
+    <p th:text="${post.content}" class="post-content"></p>
 
-        <div class="action-links">
-            <a th:href="@{/post/list(page=${session.page})}">목록</a>
-            <a th:href="@{/mvc/post/update(id=${post.id})}">수정</a>
-            <form th:action="@{/mvc/post/delete}" method="post" style="display:inline;">
-                <input type="hidden" name="id" th:value="${post.id}"/>
-                <button type="submit">삭제</button>
-            </form>
-        </div>
-
-        <div class="content-header">
-            <p>등록시간 : <span th:text="${post.pubDateFormatted}"></span>,
-                수정시간 : <span th:text="${post.lastModifiedFormatted}"></span>,
-                글쓴이 : <a th:text="${post.user.firstName}" th:href="@{/user/detail(id=${post.user.id})}"></a>
-            </p>
-        </div>
-
-        <p th:text="${post.content}" class="post-content"></p>
+    <div class="comments-section">
+        <h3>댓글 목록</h3>
+        <ul class="comment-list">
+            <li th:each="comment : ${comments}" class="comment-item">
+                <p class="comment-content" th:text="${comment.content}"></p>
+                <p class="comment-meta" th:text="${comment.user.firstName + ' - ' + comment.createdAt}"></p>
+            </li>
+        </ul>
     </div>
 
-    <script>
-        document.forms[0].addEventListener('submit', function (event) {
-            if (!confirm("삭제하시겠습니까?")) event.preventDefault();
-        });
-    </script>
+    <div class="comment-form-container">
+        <h4>새 댓글 작성</h4>
+        <form th:action="@{/post/comment}" method="post" class="comment-form">
+            <input type="hidden" name="postId" th:value="${post.id}">
+            <textarea name="content" required placeholder="댓글을 입력하세요..."></textarea>
+            <button type="submit">댓글 작성</button>
+        </form>
+    </div>
 </main>
+<script>
+    document.forms[0].addEventListener('submit', function (event) {
+        if (!confirm("삭제하시겠습니까?")) event.preventDefault();
+    });
+</script>
 </body>
 </html>

@@ -1,8 +1,8 @@
 package kr.mjc.jiho.web.controller
 
-import jakarta.servlet.http.HttpServletRequest
-import jakarta.servlet.http.HttpServletResponse
 import jakarta.servlet.http.HttpSession
+import kr.mjc.jiho.web.repository.comment.Comments
+import kr.mjc.jiho.web.repository.comment.CommentService
 import kr.mjc.jiho.web.repository.post.Post
 import kr.mjc.jiho.web.repository.post.PostRepository
 import kr.mjc.jiho.web.repository.user.User
@@ -19,7 +19,10 @@ import org.springframework.web.server.ResponseStatusException
 import java.time.LocalDateTime
 
 @Controller
-class PostControllerV2(private val postRepository : PostRepository) {
+class PostControllerV2(
+    private val postRepository: PostRepository,
+    private val commentService: CommentService
+) {
     companion object {
         private const val PAGE_SIZE = 10
     }
@@ -50,9 +53,27 @@ class PostControllerV2(private val postRepository : PostRepository) {
     }
 
     @GetMapping("/post/detail")
-    fun detail(id: Long, model: Model){
-       val post : Post = postRepository.findById(id).orElseThrow()
+    fun detail(id: Long, model: Model) {
+        val post: Post = postRepository.findById(id).orElseThrow()
+        val comments = commentService.getCommentsByPostId(id)
         model.addAttribute("post", post)
+        model.addAttribute("comments", comments)
+    }
+
+    @PostMapping("/post/comment")
+    fun addComment(
+        @RequestParam postId: Long,
+        @RequestParam content: String,
+        @SessionAttribute user: User
+    ): String {
+        val post = postRepository.findById(postId).orElseThrow()
+        val comment = Comments().apply {
+            this.user = user
+            this.post = post
+            this.content = content
+        }
+        commentService.addComment(comment)
+        return "redirect:/post/detail?id=$postId"
     }
 
     /** 글수정 화면 */
