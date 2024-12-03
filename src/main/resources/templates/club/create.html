@@ -130,11 +130,61 @@
         #btnCancel:hover {
             background-color: #e0e0e0;
         }
+        .menu-icon {
+            display: none;
+            font-size: 1.5rem;
+            color: var(--accent-color);
+            cursor: pointer;
+        }
+
+        @media screen and (max-width: 768px) {
+            .menu-icon {
+                display: block;
+            }
+
+            .nav-links {
+                display: none;
+                flex-direction: column;
+                position: absolute;
+                top: 60px;
+                left: 0;
+                width: 100%;
+                background-color: var(--primary-color);
+                padding: 1rem;
+            }
+
+            .nav-links.show {
+                display: flex;
+            }
+
+            .nav-links li {
+                margin: 0.5rem 0;
+            }
+
+            main {
+                padding: 1rem;
+            }
+
+            input[type="text"], textarea, .button-group {
+                max-width: 100%;
+            }
+        }
+
+        /* 버튼 호버 효과 */
+        button {
+            transition: transform 0.3s ease, box-shadow 0.3s ease;
+        }
+
+        button:hover {
+            transform: scale(1.05);
+            box-shadow: 0 4px 8px rgba(0,0,0,0.2);
+        }
     </style>
 </head>
 <body>
 <nav class="navbar">
     <a href="#" class="logo">MJC Community</a>
+    <div class="menu-icon">&#9776;</div>
     <ul class="nav-links">
         <li><a th:href="@{/}">홈</a></li>
         <li><a th:href="@{/club/list}">동아리</a></li>
@@ -145,7 +195,7 @@
     </ul>
 </nav>
 <main>
-    <h2>게시글 작성</h2>
+    <h2>동아리 작성</h2>
     <form method="post">
         <input type="text" name="title" maxlength="255" placeholder="제목" required>
         <textarea name="content" placeholder="내용" required></textarea>
@@ -159,6 +209,9 @@
     document.addEventListener('DOMContentLoaded', function() {
         const navLinks = document.querySelectorAll('.nav-links li a');
         const bannerBtns = document.querySelectorAll('.btn');
+        const menuIcon = document.querySelector('.menu-icon');
+        const navLinksContainer = document.querySelector('.nav-links');
+        const buttons = document.querySelectorAll('button');
 
         function addHoverEffect(elements) {
             elements.forEach(element => {
@@ -175,6 +228,31 @@
 
         addHoverEffect(navLinks);
         addHoverEffect(bannerBtns);
+
+        // 반응형 메뉴 토글
+        menuIcon.addEventListener('click', function() {
+            navLinksContainer.classList.toggle('show');
+        });
+
+        // 화면 크기 변경 시 메뉴 상태 조정
+        window.addEventListener('resize', function() {
+            if (window.innerWidth > 768) {
+                navLinksContainer.classList.remove('show');
+            }
+        });
+
+        // 버튼 호버 효과
+        buttons.forEach(button => {
+            button.addEventListener('mouseenter', function() {
+                this.style.transform = 'scale(1.05)';
+                this.style.boxShadow = '0 4px 8px rgba(0,0,0,0.2)';
+            });
+
+            button.addEventListener('mouseleave', function() {
+                this.style.transform = 'scale(1)';
+                this.style.boxShadow = 'none';
+            });
+        });
     });
 </script>
 </body>

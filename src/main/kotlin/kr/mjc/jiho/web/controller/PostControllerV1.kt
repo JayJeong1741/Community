@@ -27,7 +27,7 @@ class PostControllerV1(private val postRepository : PostRepository) {
         req.session.setAttribute("page", page)//원래 목록으로 돌아가기 위한 설정
 
         val posts:Slice<Post> =
-            postRepository.findAllByOrderByIdDesc(PageRequest.of(page, PAGE_SIZE))
+            postRepository.findAllPostByOrderByIdDesc(PageRequest.of(page, PAGE_SIZE))
         model.addAttribute("list", posts)
     }
 

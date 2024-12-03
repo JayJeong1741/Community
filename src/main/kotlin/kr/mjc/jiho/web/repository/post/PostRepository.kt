@@ -9,7 +9,12 @@ import org.springframework.data.repository.query.Param
 import org.springframework.transaction.annotation.Transactional
 
 interface PostRepository : JpaRepository<Post, Long> {
-    fun findAllByOrderByIdDesc(pageable: PageRequest): Slice<Post>
+    @Query("select p from Post p where p.type = 1 order by p.id desc")
+    fun findAllPostByOrderByIdDesc(pageable: PageRequest): Slice<Post>
+
+    @Query("select p from Post p where p.type = 2 order by p.id desc")
+    fun findAllClubByOrderByIdDesc(pageable: PageRequest): Slice<Post>
+
 
     /** 글수정 */
     @Modifying

@@ -148,6 +148,8 @@
         <a href="#" class="logo">MJC Community</a>
         <ul class="nav-links">
             <li><a th:href="@{/}">홈</a></li>
+            <li><a th:href="@{/club/list}">동아리</a></li>
+            <li><a th:href="@{/post/list}">커뮤니티</a></li>
             <li th:unless="${session.user}"><a th:href="@{/user/login}">Login</a></li>
             <li th:if="${session.user}"><a th:href="@{/user/profile}" th:text="${session.user.firstName}"></a></li>
         </ul>
@@ -183,6 +185,27 @@
 <footer class="container">
     <!-- 필요한 경우 푸터 추가 -->
 </footer>
+<script>
+    document.addEventListener('DOMContentLoaded', function() {
+        const navLinks = document.querySelectorAll('.nav-links li a');
+        const bannerBtns = document.querySelectorAll('.btn');
 
+        function addHoverEffect(elements) {
+            elements.forEach(element => {
+                element.addEventListener('mouseenter', function() {
+                    this.style.transition = 'font-size 0.3s ease';
+                    this.style.fontSize = '1.2em';
+                });
+
+                element.addEventListener('mouseleave', function() {
+                    this.style.fontSize = '1em';
+                });
+            });
+        }
+
+        addHoverEffect(navLinks);
+        addHoverEffect(bannerBtns);
+    });
+</script>
 </body>
 </html>

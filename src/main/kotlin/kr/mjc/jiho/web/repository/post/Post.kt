@@ -15,6 +15,7 @@ class Post {
     @ManyToOne @JoinColumn(name = "user_id") lateinit var user: User
     lateinit var pubDate: LocalDateTime
     lateinit var lastModified: LocalDateTime
+    var type : Long = 0
 
     val pubDateFormatted get() = pubDate.formatted
     val lastModifiedFormatted get() = lastModified.formatted

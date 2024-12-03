@@ -114,11 +114,62 @@
             color: var(--secondary-color);
             text-decoration: none;
         }
+        .menu-icon {
+            display: none;
+            font-size: 1.5rem;
+            color: var(--accent-color);
+            cursor: pointer;
+        }
+
+        @media screen and (max-width: 768px) {
+            .menu-icon {
+                display: block;
+            }
+
+            .nav-links {
+                display: none;
+                flex-direction: column;
+                position: absolute;
+                top: 60px;
+                left: 0;
+                width: 100%;
+                background-color: var(--primary-color);
+                padding: 1rem;
+            }
+
+            .nav-links.show {
+                display: flex;
+            }
+
+            .nav-links li {
+                margin: 0.5rem 0;
+            }
+
+            .post-list {
+                grid-template-columns: 1fr;
+            }
+        }
+        .write-btn {
+            display: inline-block;
+            background-color: var(--primary-color);
+            color: var(--accent-color);
+            padding: 0.5rem 1rem;
+            text-decoration: none;
+            border-radius: 4px;
+            margin-bottom: 1rem;
+            transition: transform 0.3s ease, box-shadow 0.3s ease;
+        }
+
+        .write-btn:hover {
+            transform: scale(1.05);
+            box-shadow: 0 4px 8px rgba(0,0,0,0.2);
+        }
     </style>
 </head>
 <body>
 <nav class="navbar">
     <a href="#" class="logo">MJC Community</a>
+    <div class="menu-icon">&#9776;</div>
     <ul class="nav-links">
         <li><a th:href="@{/}">홈</a></li>
         <li><a th:href="@{/club/list}">동아리</a></li>
@@ -128,12 +179,12 @@
     </ul>
 </nav>
 <main>
-    <h2>커뮤니티</h2>
-    <a th:href="@{/post/create}" class="write-btn">글쓰기</a>
+    <h2>동아리</h2>
+    <a th:href="@{/club/create}" class="write-btn">글쓰기</a>
 
     <div class="post-list">
         <div th:each="post : ${list}" class="post-card">
-            <a th:href="@{/post/detail(id=${post.id})}" class="post-title" th:text="${post.title}"></a>
+            <a th:href="@{/club/detail(id=${post.id})}" class="post-title" th:text="${post.title}"></a>
             <div class="post-info">
                 <span th:text="${post.id}"></span> |
                 <a th:text="${post.user.firstName}" th:href="@{/user/detail(id=${post.user.id})}" class="post-author"></a> |
@@ -148,6 +199,8 @@
     document.addEventListener('DOMContentLoaded', function() {
         const navLinks = document.querySelectorAll('.nav-links li a');
         const bannerBtns = document.querySelectorAll('.btn');
+        const menuIcon = document.querySelector('.menu-icon');
+        const navLinksContainer = document.querySelector('.nav-links');
 
         function addHoverEffect(elements) {
             elements.forEach(element => {
@@ -164,6 +217,52 @@
 
         addHoverEffect(navLinks);
         addHoverEffect(bannerBtns);
+
+        // 반응형 메뉴 토글
+        menuIcon.addEventListener('click', function() {
+            navLinksContainer.classList.toggle('show');
+        });
+
+        // 화면 크기 변경 시 메뉴 상태 조정
+        window.addEventListener('resize', function() {
+            if (window.innerWidth > 768) {
+                navLinksContainer.classList.remove('show');
+            }
+        });
+    });
+    document.addEventListener('DOMContentLoaded', function() {
+        const navLinks = document.querySelectorAll('.nav-links li a');
+        const bannerBtns = document.querySelectorAll('.btn');
+        const writeBtn = document.querySelector('.write-btn');
+
+        function addHoverEffect(elements) {
+            elements.forEach(element => {
+                element.addEventListener('mouseenter', function() {
+                    this.style.transition = 'font-size 0.3s ease';
+                    this.style.fontSize = '1.2em';
+                });
+
+                element.addEventListener('mouseleave', function() {
+                    this.style.fontSize = '1em';
+                });
+            });
+        }
+
+        addHoverEffect(navLinks);
+        addHoverEffect(bannerBtns);
+
+        // 글쓰기 버튼에 호버 효과 추가
+        if (writeBtn) {
+            writeBtn.addEventListener('mouseenter', function() {
+                this.style.transform = 'scale(1.05)';
+                this.style.boxShadow = '0 4px 8px rgba(0,0,0,0.2)';
+            });
+
+            writeBtn.addEventListener('mouseleave', function() {
+                this.style.transform = 'scale(1)';
+                this.style.boxShadow = 'none';
+            });
+        }
     });
 </script>
 </body>

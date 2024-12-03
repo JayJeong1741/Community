@@ -27,33 +27,64 @@ class PostControllerV2(
         private const val PAGE_SIZE = 10
     }
 
+    @GetMapping("/club/list")
+    fun clubList(page: Int = 0, session: HttpSession, model: Model) {
+        session.setAttribute("page", page)
+        val posts:Slice<Post> = postRepository.findAllClubByOrderByIdDesc(PageRequest.of(page, PAGE_SIZE))
+        model.addAttribute("list", posts)
+    }
+
     @GetMapping("/post/list")
     fun list(page:Int = 0, session: HttpSession, model: Model){
         session.setAttribute("page", page)//원래 목록으로 돌아가기 위한 설정
         val posts:Slice<Post> =
-            postRepository.findAllByOrderByIdDesc(PageRequest.of(page, PAGE_SIZE))
+            postRepository.findAllPostByOrderByIdDesc(PageRequest.of(page, PAGE_SIZE))
         model.addAttribute("list", posts)
     }
 
     // /post/create 접속 시 interceptor 실행 후 create메소드 실행
     /** 글쓰기 화면 */
     @GetMapping("/post/create")
-    fun create() {
+    fun postCreate() {
     }
 
     @PostMapping("/post/create")
-    fun create(post: Post, @SessionAttribute user:User, session: HttpSession): String{
+    fun postCreate(post: Post, @SessionAttribute user:User, session: HttpSession): String{
         post.apply {
             this.user = user
             pubDate = LocalDateTime.now()
             lastModified =LocalDateTime.now()
+            type = 1;
         }
         postRepository.save(post)
         return "redirect:/post/list"
     }
 
+    @GetMapping("/club/create")
+    fun clubCreate() {
+    }
+
+    @PostMapping("/club/create")
+    fun clubCreate(post: Post, @SessionAttribute user:User, session: HttpSession): String{
+        post.apply {
+            this.user = user
+            pubDate = LocalDateTime.now()
+            lastModified =LocalDateTime.now()
+            type = 2;
+        }
+        postRepository.save(post)
+        return "redirect:/club/list"
+    }
+
     @GetMapping("/post/detail")
-    fun detail(id: Long, model: Model) {
+    fun postDetail(id: Long, model: Model) {
+        val post: Post = postRepository.findById(id).orElseThrow()
+        val comments = commentService.getCommentsByPostId(id)
+        model.addAttribute("post", post)
+        model.addAttribute("comments", comments)
+    }
+    @GetMapping("/club/detail")
+    fun clubDetail(id: Long, model: Model) {
         val post: Post = postRepository.findById(id).orElseThrow()
         val comments = commentService.getCommentsByPostId(id)
         model.addAttribute("post", post)
@@ -84,19 +115,38 @@ class PostControllerV2(
     }
     /*업데이트 구현*/
     @PostMapping("/post/update")
-    fun update(@SessionAttribute user:User, post:Post):String {
+    fun postUpdate(@SessionAttribute user:User, post:Post):String {
 
         checkPost(post.id, user.id)
         postRepository.update(post)
         return "redirect:/post/detail?id=${post.id}"
     }
+    @GetMapping("/club/update")
+    fun clubUpdate(@SessionAttribute user: User, id: Long , model: Model) {
+        val post = checkPost(id, user.id)
+        model.addAttribute("post", post)
+    }
+    @PostMapping("/club/update")
+    fun clubUpdate(@SessionAttribute user:User, post:Post):String {
+
+        checkPost(post.id, user.id)
+        postRepository.update(post)
+        return "redirect:/club/detail?id=${post.id}"
+    }
 
     @PostMapping("post/delete")
-    fun delete(id:Long, session: HttpSession,@SessionAttribute user: User ,
+    fun postDelete(id:Long, session: HttpSession,@SessionAttribute user: User ,
                @SessionAttribute page : Int):String{
         checkPost(id, user.id)
         postRepository.deleteById(id)
         return "redirect:/post/list?page=$page"
+    }
+    @PostMapping("club/delete")
+    fun clubDelete(id:Long, session: HttpSession,@SessionAttribute user: User ,
+               @SessionAttribute page : Int):String{
+        checkPost(id, user.id)
+        postRepository.deleteById(id)
+        return "redirect:/club/list?page=$page"
     }
     /** 게시글의 권한 체크
      * @throws ResponseStatusException 권한이 없을 경우

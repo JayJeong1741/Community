@@ -22,6 +22,7 @@
     <div class="login-form">
         <button class="login-form__btn" type="submit">로그인</button>
     </div>
+    <p th:if="${param.error}" class="warn">이메일이 없거나 비밀번호가 다릅니다.</p>
     <div class="setting-id">
         <p><a th:href="@{/user/signup}">회원가입</a></p>
         <div class="stick"></div>
@@ -30,7 +31,7 @@
         <div><a id="findPasswd" href="#">비밀번호 찾기</a></div>
     </div>
 </form>
-<p th:if="${param.error}" class="warn">이메일이 없거나 비밀번호가 다릅니다.</p>
+
 
 <script src="https://kit.fontawesome.com/f33940d59f.js" crossorigin="anonymous"></script>
 </body>

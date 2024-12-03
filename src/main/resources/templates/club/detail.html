@@ -257,9 +257,9 @@
         <h2 th:text="${post.title}"></h2>
     </div>
     <div class="action-links">
-        <a th:href="@{/post/list(page=${session.page})}">목록</a>
-        <a th:href="@{/mvc/post/update(id=${post.id})}">수정</a>
-        <form th:action="@{/mvc/post/delete}" method="post" style="display:inline;">
+        <a th:href="@{/club/list(page=${session.page})}">목록</a>
+        <a th:href="@{/club/update(id=${post.id})}">수정</a>
+        <form th:action="@{/club/delete}" method="post" style="display:inline;">
             <input type="hidden" name="id" th:value="${post.id}"/>
             <button type="submit">삭제</button>
         </form>
