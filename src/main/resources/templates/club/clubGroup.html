@@ -3,8 +3,9 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>MJC Community - Community</title>
+    <title>MJC Community - 동아리 목록</title>
     <style>
+        /* 기존 스타일 그대로 유지 */
         :root {
             --primary-color: #1f4e79;
             --secondary-color: #63aad6;
@@ -85,71 +86,58 @@
             margin-bottom: 1rem;
         }
 
-        .write-btn {
-            display: inline-block;
-            background-color: var(--primary-color);
-            color: var(--accent-color);
-            padding: 0.5rem 1rem;
-            text-decoration: none;
-            border-radius: 4px;
-            margin-bottom: 1rem;
-            transition: all 0.3s ease;
+        .club-list {
+            display: grid;
+            grid-template-columns: repeat(auto-fill, minmax(250px, 1fr));
+            gap: 1.5rem;
         }
 
-        .write-btn:hover {
-            background-color: var(--secondary-color);
-            transform: scale(1.05);
-        }
-
-        .post-list {
-            display: flex;
-            flex-direction: column;
-            gap: 1rem;
-        }
-
-        .post-card {
+        .club-card {
             background-color: var(--card-background);
             border-radius: 8px;
-            box-shadow: 0 2px 4px rgba(0,0,0,0.1);
+            box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+            overflow: hidden;
+            transition: box-shadow 0.3s ease;
+        }
+
+        .club-card:hover {
+            box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2);
+        }
+
+        .club-image {
+            width: 100%;
+            height: 150px;
+            object-fit: cover;
+        }
+
+        .club-content {
             padding: 1rem;
-            transition: all 0.3s ease;
         }
 
-        .post-card:hover {
-            box-shadow: 0 4px 8px rgba(0,0,0,0.2);
-            transform: scale(1.02);
-        }
-
-        .post-title {
+        .club-title {
             color: var(--primary-color);
             font-size: 1.2rem;
-            margin-bottom: 0.5rem;
-            text-decoration: none;
+            margin: 0.5rem 0;
         }
 
-        .post-info {
+        .club-president {
             font-size: 0.9rem;
             color: #666;
         }
 
-        .post-author {
-            color: var(--secondary-color);
-            text-decoration: none;
-        }
-
-        @media (max-width: 768px) {
+        @media screen and (max-width: 768px) {
             .nav-links {
                 display: none;
                 flex-direction: column;
-                width: 100%;
                 position: absolute;
                 top: 60px;
                 left: 0;
+                width: 100%;
                 background-color: var(--primary-color);
                 padding: 1rem;
             }
 
-            .nav-links.active {
+            .nav-links.show {
                 display: flex;
             }
 
@@ -167,11 +155,10 @@
 <nav class="navbar">
     <a href="#" class="logo">MJC Community</a>
     <ul class="nav-links">
-        <li><a th:href="@{/}">홈</a></li>
-        <li><a th:href="@{/club/list}">동아리</a></li>
-        <li><a th:href="@{/post/list}">커뮤니티</a></li>
-        <li th:if="${session.user}"><a th:href="@{/user/profile}"
-                                       th:text="${session.user.firstName}"></a></li>
+        <li><a href="#">홈</a></li>
+        <li><a href="#">동아리</a></li>
+        <li><a href="#">커뮤니티</a></li>
+        <li><a href="#">내 프로필</a></li>
     </ul>
     <div class="hamburger">
         <span></span>
@@ -180,36 +167,51 @@
     </div>
 </nav>
 <main>
-    <h2>커뮤니티</h2>
-    <a th:href="@{/post/create}" class="write-btn">글쓰기</a>
-
-    <div class="post-list">
-        <div th:each="post : ${list}" class="post-card">
-            <a th:href="@{/post/detail(id=${post.id})}" class="post-title" th:text="${post.title}"></a>
-            <div class="post-info">
-                <span th:text="${post.id}"></span> |
-                <a th:text="${post.user.firstName}" th:href="@{/user/detail(id=${post.user.id})}" class="post-author"></a> |
-                <span th:text="${post.pubDateFormatted}"></span>
+    <h2>동아리 목록</h2>
+    <div class="club-list">
+        <div class="club-card">
+            <img th:src="@{/css/band.png}" alt="밴드 이미지" class="club-image">
+            <div class="club-content">
+                <h3 class="club-title">밴드</h3>
+                <p class="club-president">회장: 김철수</p>
+            </div>
+        </div>
+        <div class="club-card">
+            <img th:src="@{/css/basketball.png}" alt="농구 이미지" class="club-image">
+            <div class="club-content">
+                <h3 class="club-title">농구</h3>
+                <p class="club-president">회장: 이영희</p>
+            </div>
+        </div>
+        <div class="club-card">
+            <img th:src="@{/css/photo.png}" alt="사진 이미지" class="club-image">
+            <div class="club-content">
+                <h3 class="club-title">사진</h3>
+                <p class="club-president">회장: 박지훈</p>
+            </div>
+        </div>
+        <div class="club-card">
+            <img th:src="@{/css/soccer.png}" alt="축구 이미지" class="club-image">
+            <div class="club-content">
+                <h3 class="club-title">축구</h3>
+                <p class="club-president">회장: 오 건</p>
             </div>
         </div>
     </div>
-
-    <div th:replace="~{layouts/pagenation::p}"></div>
 </main>
-
 <script>
-    document.addEventListener('DOMContentLoaded', function() {
+    // 네비게이션 햄버거 메뉴
+    document.addEventListener('DOMContentLoaded', function () {
         const hamburger = document.querySelector('.hamburger');
         const navLinks = document.querySelector('.nav-links');
 
-        hamburger.addEventListener('click', function() {
-            navLinks.classList.toggle('active');
+        hamburger.addEventListener('click', function () {
+            navLinks.classList.toggle('show');
         });
 
-        // 화면 크기가 변경될 때 네비게이션 메뉴 상태 재설정
-        window.addEventListener('resize', function() {
+        window.addEventListener('resize', function () {
             if (window.innerWidth > 768) {
-                navLinks.classList.remove('active');
+                navLinks.classList.remove('show');
             }
         });
     });

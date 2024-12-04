@@ -1,6 +1,7 @@
 package kr.mjc.jiho.web
 
-import kr.mjc.jiho.web.controller.AuthInterceptor
+import kr.mjc.jiho.web.interceptor.AuthInterceptor
+import kr.mjc.jiho.web.interceptor.CsrfInterceptor
 import org.springframework.beans.factory.annotation.Autowired
 import org.springframework.boot.autoconfigure.SpringBootApplication
 import org.springframework.boot.runApplication
@@ -15,11 +16,20 @@ import org.springframework.web.servlet.config.annotation.WebMvcConfigurer
 class Web2024Application : WebMvcConfigurer {
 
     @Autowired lateinit var authInterceptor: AuthInterceptor
+    @Autowired lateinit var csrfInterceptor: CsrfInterceptor
 
     override fun addInterceptors(registry: InterceptorRegistry) {//spring security쓰면 자동 구현
         registry.addInterceptor(authInterceptor)
-            .addPathPatterns("/post/create", "/post/update", "/post/delete",
-                "/user/profile", "/user/logout", "/user/delete", "/post/list")
+            .addPathPatterns("/post/list", "/post/create", "/post/update", "/post/delete",
+                "/user/profile", "/user/logout", "/user/delete",
+                "/club/list", "/club/create", "/club/update", "/club/delete")
+
+        registry.addInterceptor(csrfInterceptor)
+            .addPathPatterns("/user/login", "/user/logout", "/user/signup",
+                "/user/profile", "/post/create", "/post/update",
+                "/post/detail","/post/delete","/post/myPostList", "/post/deletePostList",
+                "/club/create", "/club/update",
+                "/club/detail","/club/delete")
     }
 
     @Bean

@@ -53,11 +53,26 @@
         .nav-links a {
             color: var(--accent-color);
             text-decoration: none;
-            transition: color 0.3s ease;
+            transition: all 0.3s ease;
         }
 
         .nav-links a:hover {
             color: var(--secondary-color);
+            transform: scale(1.1);
+        }
+
+        .hamburger {
+            display: none;
+            flex-direction: column;
+            cursor: pointer;
+        }
+
+        .hamburger span {
+            width: 25px;
+            height: 3px;
+            background-color: var(--accent-color);
+            margin: 2px 0;
+            transition: 0.4s;
         }
 
         main {
@@ -89,6 +104,12 @@
             border: 1px solid #ddd;
             border-radius: 4px;
             font-size: 1rem;
+            transition: all 0.3s ease;
+        }
+
+        input[type="text"]:focus, textarea:focus {
+            box-shadow: 0 0 5px var(--secondary-color);
+            border-color: var(--secondary-color);
         }
 
         textarea {
@@ -110,7 +131,7 @@
             border-radius: 4px;
             font-size: 1rem;
             cursor: pointer;
-            transition: background-color 0.3s ease;
+            transition: all 0.3s ease;
         }
 
         button[type="submit"] {
@@ -120,6 +141,7 @@
 
         button[type="submit"]:hover {
             background-color: var(--button-hover-background);
+            transform: scale(1.05);
         }
 
         #btnCancel {
@@ -129,6 +151,40 @@
 
         #btnCancel:hover {
             background-color: #e0e0e0;
+            transform: scale(1.05);
+        }
+
+        @media (max-width: 768px) {
+            .nav-links {
+                display: none;
+                flex-direction: column;
+                width: 100%;
+                position: absolute;
+                top: 60px;
+                left: 0;
+                background-color: var(--primary-color);
+                padding: 1rem;
+            }
+
+            .nav-links.active {
+                display: flex;
+            }
+
+            .nav-links li {
+                margin: 0.5rem 0;
+            }
+
+            .hamburger {
+                display: flex;
+            }
+
+            main {
+                padding: 1rem;
+            }
+
+            input[type="text"], textarea, .button-group {
+                max-width: 100%;
+            }
         }
     </style>
 </head>
@@ -143,6 +199,11 @@
         <li th:if="${session.user}"><a th:href="@{/user/profile}"
                                        th:text="${session.user.firstName}"></a></li>
     </ul>
+    <div class="hamburger">
+        <span></span>
+        <span></span>
+        <span></span>
+    </div>
 </nav>
 <main>
     <h2>게시글 작성</h2>
@@ -153,28 +214,25 @@
             <button type="submit">저장</button>
             <button id="btnCancel" type="button" onclick="history.back()">취소</button>
         </div>
+        <input type="hidden" name="_csrf" th:value="${session.csrf}"/>
     </form>
 </main>
+
 <script>
     document.addEventListener('DOMContentLoaded', function() {
-        const navLinks = document.querySelectorAll('.nav-links li a');
-        const bannerBtns = document.querySelectorAll('.btn');
+        const hamburger = document.querySelector('.hamburger');
+        const navLinks = document.querySelector('.nav-links');
 
-        function addHoverEffect(elements) {
-            elements.forEach(element => {
-                element.addEventListener('mouseenter', function() {
-                    this.style.transition = 'font-size 0.3s ease';
-                    this.style.fontSize = '1.2em';
-                });
+        hamburger.addEventListener('click', function() {
+            navLinks.classList.toggle('active');
+        });
 
-                element.addEventListener('mouseleave', function() {
-                    this.style.fontSize = '1em';
-                });
-            });
-        }
-
-        addHoverEffect(navLinks);
-        addHoverEffect(bannerBtns);
+        // 화면 크기가 변경될 때 네비게이션 메뉴 상태 재설정
+        window.addEventListener('resize', function() {
+            if (window.innerWidth > 768) {
+                navLinks.classList.remove('active');
+            }
+        });
     });
 </script>
 </body>

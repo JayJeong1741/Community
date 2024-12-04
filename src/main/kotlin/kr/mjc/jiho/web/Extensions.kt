@@ -7,8 +7,10 @@ import org.thymeleaf.context.WebContext
 import org.thymeleaf.web.servlet.JakartaServletWebApplication
 import java.net.URLEncoder
 import java.nio.charset.Charset
+import java.security.SecureRandom
 import java.time.LocalDateTime
 import java.time.format.DateTimeFormatter
+import java.util.Base64
 
 /** queryString을 포함한 full url */
 val HttpServletRequest.fullUrl: String
@@ -29,3 +31,13 @@ val LocalDateTime.formatted: String get() = this.format(formatter)
 fun HttpServlet.webContext(req: HttpServletRequest, resp: HttpServletResponse) =
     WebContext(JakartaServletWebApplication.buildApplication(servletContext)
         .buildExchange(req, resp))
+
+private val secureRandom = SecureRandom()
+private val base64Encoder = Base64.getEncoder()
+
+
+fun generateRandomString(length: Int): String {
+    val bytes = ByteArray(length)
+    secureRandom.nextBytes(bytes)
+    return base64Encoder.encodeToString(bytes)
+}

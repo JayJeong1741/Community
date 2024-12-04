@@ -52,11 +52,26 @@
         .nav-links a {
             color: var(--accent-color);
             text-decoration: none;
-            transition: color 0.3s ease;
+            transition: all 0.3s ease;
         }
 
         .nav-links a:hover {
             color: var(--secondary-color);
+            transform: scale(1.1);
+        }
+
+        .hamburger {
+            display: none;
+            flex-direction: column;
+            cursor: pointer;
+        }
+
+        .hamburger span {
+            width: 25px;
+            height: 3px;
+            background-color: var(--accent-color);
+            margin: 2px 0;
+            transition: 0.4s;
         }
 
         main {
@@ -164,12 +179,35 @@
             transform: scale(1.05);
             box-shadow: 0 4px 8px rgba(0,0,0,0.2);
         }
+        @media (max-width: 768px) {
+            .nav-links {
+                display: none;
+                flex-direction: column;
+                width: 100%;
+                position: absolute;
+                top: 60px;
+                left: 0;
+                background-color: var(--primary-color);
+                padding: 1rem;
+            }
+
+            .nav-links.active {
+                display: flex;
+            }
+
+            .nav-links li {
+                margin: 0.5rem 0;
+            }
+
+            .hamburger {
+                display: flex;
+            }
+        }
     </style>
 </head>
 <body>
 <nav class="navbar">
     <a href="#" class="logo">MJC Community</a>
-    <div class="menu-icon">&#9776;</div>
     <ul class="nav-links">
         <li><a th:href="@{/}">홈</a></li>
         <li><a th:href="@{/club/list}">동아리</a></li>
@@ -177,9 +215,14 @@
         <li th:if="${session.user}"><a th:href="@{/user/profile}"
                                        th:text="${session.user.firstName}"></a></li>
     </ul>
+    <div class="hamburger">
+        <span></span>
+        <span></span>
+        <span></span>
+    </div>
 </nav>
 <main>
-    <h2>동아리</h2>
+    <h2>동아리 홍보</h2>
     <a th:href="@{/club/create}" class="write-btn">글쓰기</a>
 
     <div class="post-list">
@@ -201,6 +244,16 @@
         const bannerBtns = document.querySelectorAll('.btn');
         const menuIcon = document.querySelector('.menu-icon');
         const navLinksContainer = document.querySelector('.nav-links');
+        // 화면 크기 변경 시 메뉴 상태 조정
+        window.addEventListener('resize', function() {
+            if (window.innerWidth > 768) {
+                navLinksContainer.classList.remove('show');
+            }
+        });
+        // 반응형 메뉴 토글
+        menuIcon.addEventListener('click', function() {
+            navLinksContainer.classList.toggle('show');
+        });
 
         function addHoverEffect(elements) {
             elements.forEach(element => {
@@ -218,22 +271,27 @@
         addHoverEffect(navLinks);
         addHoverEffect(bannerBtns);
 
-        // 반응형 메뉴 토글
-        menuIcon.addEventListener('click', function() {
-            navLinksContainer.classList.toggle('show');
-        });
 
-        // 화면 크기 변경 시 메뉴 상태 조정
-        window.addEventListener('resize', function() {
-            if (window.innerWidth > 768) {
-                navLinksContainer.classList.remove('show');
-            }
-        });
+
+
     });
     document.addEventListener('DOMContentLoaded', function() {
         const navLinks = document.querySelectorAll('.nav-links li a');
         const bannerBtns = document.querySelectorAll('.btn');
         const writeBtn = document.querySelector('.write-btn');
+        const hamburger = document.querySelector('.hamburger');
+        const navLinksContainer = document.querySelector('.nav-links'); // 이 줄을 추가
+
+        hamburger.addEventListener('click', function() {
+            navLinksContainer.classList.toggle('active'); // 이 줄을 수정
+        });
+
+        // 화면 크기가 변경될 때 네비게이션 메뉴 상태 재설정
+        window.addEventListener('resize', function() {
+            if (window.innerWidth > 768) {
+                navLinksContainer.classList.remove('active'); // 이 줄을 수정
+            }
+        });
 
         function addHoverEffect(elements) {
             elements.forEach(element => {

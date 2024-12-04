@@ -191,6 +191,7 @@
             <button id="btnCancel" type="button" onclick="history.back()">취소</button>
         </div>
         <input type="hidden" name="id" th:value="${post.id}">
+        <input type="hidden" name="_csrf" th:value="${session.csrf}"/>
     </form>
 </main>
 <script>

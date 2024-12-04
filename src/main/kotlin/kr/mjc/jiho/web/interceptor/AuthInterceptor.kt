@@ -1,4 +1,4 @@
-package kr.mjc.jiho.web.controller
+package kr.mjc.jiho.web.interceptor
 
 import jakarta.servlet.http.HttpServletRequest
 import jakarta.servlet.http.HttpServletResponse

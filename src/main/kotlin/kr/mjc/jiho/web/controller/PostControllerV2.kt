@@ -21,8 +21,7 @@ import java.time.LocalDateTime
 @Controller
 class PostControllerV2(
     private val postRepository: PostRepository,
-    private val commentService: CommentService
-) {
+    private val commentService: CommentService) {
     companion object {
         private const val PAGE_SIZE = 10
     }
@@ -33,6 +32,8 @@ class PostControllerV2(
         val posts:Slice<Post> = postRepository.findAllClubByOrderByIdDesc(PageRequest.of(page, PAGE_SIZE))
         model.addAttribute("list", posts)
     }
+    @GetMapping("/club/clubGroup")
+    fun clubGroup(){}
 
     @GetMapping("/post/list")
     fun list(page:Int = 0, session: HttpSession, model: Model){
@@ -41,6 +42,7 @@ class PostControllerV2(
             postRepository.findAllPostByOrderByIdDesc(PageRequest.of(page, PAGE_SIZE))
         model.addAttribute("list", posts)
     }
+
 
     // /post/create 접속 시 interceptor 실행 후 create메소드 실행
     /** 글쓰기 화면 */

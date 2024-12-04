@@ -52,11 +52,26 @@
         .nav-links a {
             color: var(--accent-color);
             text-decoration: none;
-            transition: color 0.3s ease;
+            transition: all 0.3s ease;
         }
 
         .nav-links a:hover {
             color: var(--secondary-color);
+            transform: scale(1.1);
+        }
+
+        .hamburger {
+            display: none;
+            flex-direction: column;
+            cursor: pointer;
+        }
+
+        .hamburger span {
+            width: 25px;
+            height: 3px;
+            background-color: var(--accent-color);
+            margin: 2px 0;
+            transition: 0.4s;
         }
 
         main {
@@ -239,6 +254,30 @@
                 padding: 1rem;
             }
         }
+        @media (max-width: 768px) {
+            .nav-links {
+                display: none;
+                flex-direction: column;
+                width: 100%;
+                position: absolute;
+                top: 60px;
+                left: 0;
+                background-color: var(--primary-color);
+                padding: 1rem;
+            }
+
+            .nav-links.active {
+                display: flex;
+            }
+
+            .nav-links li {
+                margin: 0.5rem 0;
+            }
+
+            .hamburger {
+                display: flex;
+            }
+        }
     </style>
 </head>
 <body>
@@ -248,9 +287,14 @@
         <li><a th:href="@{/}">홈</a></li>
         <li><a th:href="@{/club/list}">동아리</a></li>
         <li><a th:href="@{/post/list}">커뮤니티</a></li>
-        <li th:unless="${session.user}"><a th:href="@{/user/login}">Login</a></li>
-        <li th:if="${session.user}"><a th:href="@{/user/profile}" th:text="${session.user.firstName}"></a></li>
+        <li th:if="${session.user}"><a th:href="@{/user/profile}"
+                                       th:text="${session.user.firstName}"></a></li>
     </ul>
+    <div class="hamburger">
+        <span></span>
+        <span></span>
+        <span></span>
+    </div>
 </nav>
 <main>
     <div class="title-card">
@@ -292,14 +336,21 @@
     </div>
 </main>
 <script>
-    document.forms[0].addEventListener('submit', function (event) {
-        if (!confirm("삭제하시겠습니까?")) event.preventDefault();
-    });
-</script>
-<script>
     document.addEventListener('DOMContentLoaded', function() {
         const navLinks = document.querySelectorAll('.nav-links li a');
-        const bannerBtns = document.querySelectorAll('.btn');
+        const hamburger = document.querySelector('.hamburger');  // .menu-icon을 .hamburger로 변경
+        const navLinksContainer = document.querySelector('.nav-links');
+
+        // 화면 크기 변경 시 메뉴 상태 조정
+        window.addEventListener('resize', function() {
+            if (window.innerWidth > 768) {
+                navLinksContainer.classList.remove('active');  // 'show'를 'active'로 변경
+            }
+        });
+
+        hamburger.addEventListener('click', function() {
+            navLinksContainer.classList.toggle('active');  // 'show'를 'active'로 변경
+        });
 
         function addHoverEffect(elements) {
             elements.forEach(element => {
@@ -315,7 +366,7 @@
         }
 
         addHoverEffect(navLinks);
-        addHoverEffect(bannerBtns);
+        // bannerBtns 부분은 HTML에 해당 요소가 없으므로 제거
     });
 </script>
 </body>

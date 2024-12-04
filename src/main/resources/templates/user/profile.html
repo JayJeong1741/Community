@@ -150,7 +150,9 @@
     </table>
     <form th:action="@{/user/logout}" method="post">
         <button type="submit">Logout</button>
+        <input type="hidden" name="_csrf" th:value="${session.csrf}"/>
     </form>
+
 </main>
 <script>
     document.addEventListener('DOMContentLoaded', function() {
