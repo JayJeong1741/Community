@@ -115,9 +115,18 @@
     <a href="#" class="logo">MJC Community</a>
     <ul class="nav-links">
         <li><a th:href="@{/}">홈</a></li>
+        <li><a th:href="@{/club/clubGroup}">동아리 목록</a></li>
+        <li><a th:href="@{/club/list}">동아리 홍보</a></li>
+        <li><a th:href="@{/post/list}">커뮤니티</a></li>
+        <li th:unless="${session.user}"><a th:href="@{/user/login}">Login</a></li>
         <li th:if="${session.user}"><a th:href="@{/user/profile}"
                                        th:text="${session.user.firstName}"></a></li>
     </ul>
+    <div class="hamburger">
+        <span></span>
+        <span></span>
+        <span></span>
+    </div>
 </nav>
 <main>
     <h1>Sign Up</h1>

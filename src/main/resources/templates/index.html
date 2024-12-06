@@ -32,7 +32,7 @@
         }
 
         .logo {
-            color: var(--text-color);
+            color: var(--accent-color);
             font-size: 1.5rem;
             text-decoration: none;
             font-weight: bold;
@@ -43,6 +43,7 @@
             display: flex;
             margin: 0;
             padding: 0;
+            margin-left: auto;
         }
 
         .nav-links li {
@@ -50,13 +51,13 @@
         }
 
         .nav-links a {
-            color: var(--text-color);
+            color: var(--accent-color);
             text-decoration: none;
             transition: color 0.3s ease;
         }
 
         .nav-links a:hover {
-            color: var(--accent-color);
+            color: var(--secondary-color);
         }
 
         #main {
@@ -111,21 +112,51 @@
             transform: scale(1.05);
         }
 
+        .button-container {
+            display: flex;
+            justify-content: center;
+            flex-wrap: wrap;
+            gap: 1rem;
+        }
+
         .btn {
             display: inline-block;
             padding: 10px 20px;
             background-color: var(--accent-color);
-            color: var(--text-color);
+            color: #4a4646;
             text-decoration: none;
             border-radius: 5px;
             transition: background-color 0.3s ease, font-size 0.3s ease;
-            margin: 0 10px;
-            color: #4a4646;
+            margin: 0;
         }
 
         .btn:hover {
             background-color:#1688e6;
             font-size: 1.1em;
+        }
+
+        @media screen and (max-width: 768px) {
+            .button-container {
+                flex-direction: column;
+                align-items: center;
+            }
+
+            .btn {
+                width: 80%;
+                text-align: center;
+            }
+
+            h1 {
+                font-size: 2rem;
+            }
+
+            p {
+                font-size: 1rem;
+            }
+
+            .image.object {
+                max-width: 80%;
+            }
         }
     </style>
 </head>
@@ -134,30 +165,41 @@
     <a href="#" class="logo">MJC Community</a>
     <ul class="nav-links">
         <li><a th:href="@{/}">홈</a></li>
+        <li><a th:href="@{/club/clubGroup}">동아리 목록</a></li>
+        <li><a th:href="@{/club/list}">동아리 홍보</a></li>
+        <li><a th:href="@{/post/list}">커뮤니티</a></li>
         <li th:unless="${session.user}"><a th:href="@{/user/login}">Login</a></li>
         <li th:if="${session.user}"><a th:href="@{/user/profile}"
                                        th:text="${session.user.firstName}"></a></li>
     </ul>
-</nav>
-
-<div id="main">
-    <div class="inner">
-        <section id="banner">
-               <span class="image object">
-                <img th:src="@{/css/BS-01.jpg}">
-               </span>
-            <div class="content">
-                <header>
-                    <h1>MJC<br/>Community</h1>
-                    <p>동아리와 게시판을 한 번에!</p>
-                </header>
-                <a th:href="@{/club/clubGroup}" class="btn" id="clubListBtn">동아리 목록</a>
-                <a th:href="@{/club/list}" class="btn" id="clubBtn">동아리 홍보</a>
-                <a th:href="@{/post/list}" class="btn" id="boardBtn">게시판</a>
-            </div>
-        </section>
+    <div class="hamburger">
+        <span></span>
+        <span></span>
+        <span></span>
     </div>
-</div>
+</nav>
+<main>
+    <div id="main">
+        <div class="inner">
+            <section id="banner">
+                <span class="image object">
+                    <img th:src="@{/css/BS-01.jpg}">
+                </span>
+                <div class="content">
+                    <header>
+                        <h1>MJC<br/>Community</h1>
+                        <p>동아리와 게시판을 한 번에!</p>
+                    </header>
+                    <div class="button-container">
+                        <a th:href="@{/club/clubGroup}" class="btn" id="clubListBtn">동아리 목록</a>
+                        <a th:href="@{/club/list}" class="btn" id="clubBtn">동아리 홍보</a>
+                        <a th:href="@{/post/list}" class="btn" id="boardBtn">게시판</a>
+                    </div>
+                </div>
+            </section>
+        </div>
+    </div>
+</main>
 
 <script>
     document.addEventListener('DOMContentLoaded', function() {
