@@ -2,7 +2,6 @@
 <html lang="ko">
 <head>
     <meta charset="UTF-8">
-    <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>MJC Community</title>
     <style>
@@ -43,7 +42,6 @@
             display: flex;
             margin: 0;
             padding: 0;
-            margin-left: auto;
         }
 
         .nav-links li {
@@ -58,6 +56,20 @@
 
         .nav-links a:hover {
             color: var(--secondary-color);
+        }
+
+        .hamburger {
+            display: none;
+            flex-direction: column;
+            cursor: pointer;
+        }
+
+        .hamburger span {
+            width: 25px;
+            height: 3px;
+            background-color: var(--accent-color);
+            margin: 2px 0;
+            transition: 0.4s;
         }
 
         #main {
@@ -136,6 +148,29 @@
         }
 
         @media screen and (max-width: 768px) {
+            .nav-links {
+                display: none;
+                flex-direction: column;
+                width: 100%;
+                position: absolute;
+                top: 60px;
+                left: 0;
+                background-color: var(--primary-color);
+                padding: 1rem;
+            }
+
+            .nav-links.active {
+                display: flex;
+            }
+
+            .nav-links li {
+                margin: 0.5rem 0;
+            }
+
+            .hamburger {
+                display: flex;
+            }
+
             .button-container {
                 flex-direction: column;
                 align-items: center;
@@ -169,8 +204,7 @@
         <li><a th:href="@{/club/list}">동아리 홍보</a></li>
         <li><a th:href="@{/post/list}">커뮤니티</a></li>
         <li th:unless="${session.user}"><a th:href="@{/user/login}">Login</a></li>
-        <li th:if="${session.user}"><a th:href="@{/user/profile}"
-                                       th:text="${session.user.firstName}"></a></li>
+        <li th:if="${session.user}"><a th:href="@{/user/profile}" th:text="${session.user.firstName}"></a></li>
     </ul>
     <div class="hamburger">
         <span></span>
@@ -183,7 +217,7 @@
         <div class="inner">
             <section id="banner">
                 <span class="image object">
-                    <img th:src="@{/css/BS-01.jpg}">
+                    <img th:src="@{/css/BS-01.jpg}" alt="Banner Image">
                 </span>
                 <div class="content">
                     <header>
@@ -191,9 +225,9 @@
                         <p>동아리와 게시판을 한 번에!</p>
                     </header>
                     <div class="button-container">
-                        <a th:href="@{/club/clubGroup}" class="btn" id="clubListBtn">동아리 목록</a>
-                        <a th:href="@{/club/list}" class="btn" id="clubBtn">동아리 홍보</a>
-                        <a th:href="@{/post/list}" class="btn" id="boardBtn">게시판</a>
+                        <a th:href="@{/club/clubGroup}" class="btn">동아리 목록</a>
+                        <a th:href="@{/club/list}" class="btn">동아리 홍보</a>
+                        <a th:href="@{/post/list}" class="btn">게시판</a>
                     </div>
                 </div>
             </section>
@@ -203,24 +237,18 @@
 
 <script>
     document.addEventListener('DOMContentLoaded', function() {
-        const navLinks = document.querySelectorAll('.nav-links li a');
-        const bannerBtns = document.querySelectorAll('.btn');
+        const hamburger = document.querySelector('.hamburger');
+        const navLinks = document.querySelector('.nav-links');
 
-        function addHoverEffect(elements) {
-            elements.forEach(element => {
-                element.addEventListener('mouseenter', function() {
-                    this.style.transition = 'font-size 0.3s ease';
-                    this.style.fontSize = '1.2em';
-                });
+        hamburger.addEventListener('click', function() {
+            navLinks.classList.toggle('active');
+        });
 
-                element.addEventListener('mouseleave', function() {
-                    this.style.fontSize = '1em';
-                });
-            });
-        }
-
-        addHoverEffect(navLinks);
-        addHoverEffect(bannerBtns);
+        window.addEventListener('resize', function() {
+            if (window.innerWidth > 768) {
+                navLinks.classList.remove('active');
+            }
+        });
     });
 </script>
 </body>

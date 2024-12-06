@@ -1,6 +1,9 @@
 <!DOCTYPE html>
 <html lang="ko">
 <head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>MJC Community - 내 정보</title>
     <style>
         :root {
             --primary-color: #1f4e79;
@@ -18,14 +21,6 @@
             padding: 0;
         }
 
-        main {
-            max-width: 600px;
-            margin: 2rem auto;
-            padding: 2rem;
-            background-color: var(--accent-color);
-            border-radius: 8px;
-            box-shadow: 0 2px 4px rgba(0,0,0,0.1);
-        }
         .navbar {
             background-color: var(--primary-color);
             padding: 1rem;
@@ -47,7 +42,6 @@
             display: flex;
             margin: 0;
             padding: 0;
-            margin-left: auto;
         }
 
         .nav-links li {
@@ -62,6 +56,29 @@
 
         .nav-links a:hover {
             color: var(--secondary-color);
+        }
+
+        .hamburger {
+            display: none;
+            flex-direction: column;
+            cursor: pointer;
+        }
+
+        .hamburger span {
+            width: 25px;
+            height: 3px;
+            background-color: var(--accent-color);
+            margin: 2px 0;
+            transition: 0.4s;
+        }
+
+        main {
+            max-width: 600px;
+            margin: 2rem auto;
+            padding: 2rem;
+            background-color: var(--accent-color);
+            border-radius: 8px;
+            box-shadow: 0 2px 4px rgba(0,0,0,0.1);
         }
 
         h1 {
@@ -112,6 +129,36 @@
         button:hover {
             background-color: var(--secondary-color);
         }
+
+        @media screen and (max-width: 768px) {
+            .nav-links {
+                display: none;
+                flex-direction: column;
+                width: 100%;
+                position: absolute;
+                top: 60px;
+                left: 0;
+                background-color: var(--primary-color);
+                padding: 1rem;
+            }
+
+            .nav-links.active {
+                display: flex;
+            }
+
+            .nav-links li {
+                margin: 0.5rem 0;
+            }
+
+            .hamburger {
+                display: flex;
+            }
+
+            main {
+                margin: 1rem;
+                padding: 1rem;
+            }
+        }
     </style>
 </head>
 <body>
@@ -123,8 +170,7 @@
         <li><a th:href="@{/club/list}">동아리 홍보</a></li>
         <li><a th:href="@{/post/list}">커뮤니티</a></li>
         <li th:unless="${session.user}"><a th:href="@{/user/login}">Login</a></li>
-        <li th:if="${session.user}"><a th:href="@{/user/profile}"
-                                       th:text="${session.user.firstName}"></a></li>
+        <li th:if="${session.user}"><a th:href="@{/user/profile}" th:text="${session.user.firstName}"></a></li>
     </ul>
     <div class="hamburger">
         <span></span>
@@ -160,28 +206,21 @@
         <button type="submit">Logout</button>
         <input type="hidden" name="_csrf" th:value="${session.csrf}"/>
     </form>
-
 </main>
 <script>
     document.addEventListener('DOMContentLoaded', function() {
-        const navLinks = document.querySelectorAll('.nav-links li a');
-        const bannerBtns = document.querySelectorAll('.btn');
+        const hamburger = document.querySelector('.hamburger');
+        const navLinks = document.querySelector('.nav-links');
 
-        function addHoverEffect(elements) {
-            elements.forEach(element => {
-                element.addEventListener('mouseenter', function() {
-                    this.style.transition = 'font-size 0.3s ease';
-                    this.style.fontSize = '1.2em';
-                });
+        hamburger.addEventListener('click', function() {
+            navLinks.classList.toggle('active');
+        });
 
-                element.addEventListener('mouseleave', function() {
-                    this.style.fontSize = '1em';
-                });
-            });
-        }
-
-        addHoverEffect(navLinks);
-        addHoverEffect(bannerBtns);
+        window.addEventListener('resize', function() {
+            if (window.innerWidth > 768) {
+                navLinks.classList.remove('active');
+            }
+        });
     });
 </script>
 </body>
