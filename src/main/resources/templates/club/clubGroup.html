@@ -13,7 +13,6 @@
             --text-color: #333333;
             --card-background: #ffffff;
         }
-
         body {
             font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
             margin: 0;
@@ -21,7 +20,6 @@
             background-color: var(--background-color);
             color: var(--text-color);
         }
-
         .navbar {
             background-color: var(--primary-color);
             padding: 1rem;
@@ -30,42 +28,35 @@
             align-items: center;
             box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
         }
-
         .logo {
             color: var(--accent-color);
             font-size: 1.5rem;
             text-decoration: none;
             font-weight: bold;
         }
-
         .nav-links {
             list-style: none;
             display: flex;
             margin: 0;
             padding: 0;
         }
-
         .nav-links li {
             margin-left: 1rem;
         }
-
         .nav-links a {
             color: var(--accent-color);
             text-decoration: none;
             transition: all 0.3s ease;
         }
-
         .nav-links a:hover {
             color: var(--secondary-color);
             transform: scale(1.1);
         }
-
         .hamburger {
             display: none;
             flex-direction: column;
             cursor: pointer;
         }
-
         .hamburger span {
             width: 25px;
             height: 3px;
@@ -73,24 +64,20 @@
             margin: 2px 0;
             transition: 0.4s;
         }
-
         main {
             max-width: 1200px;
             margin: 0 auto;
             padding: 2rem;
         }
-
         h2 {
             color: var(--primary-color);
             margin-bottom: 1rem;
         }
-
         .club-list {
             display: grid;
             grid-template-columns: repeat(auto-fill, minmax(250px, 1fr));
             gap: 1.5rem;
         }
-
         .club-card {
             background-color: var(--card-background);
             border-radius: 8px;
@@ -99,32 +86,26 @@
             transition: box-shadow 0.3s ease;
             cursor: pointer;
         }
-
         .club-card:hover {
             box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2);
         }
-
         .club-image {
             width: 100%;
             height: 150px;
             object-fit: cover;
         }
-
         .club-content {
             padding: 1rem;
         }
-
         .club-title {
             color: var(--primary-color);
             font-size: 1.2rem;
             margin: 0.5rem 0;
         }
-
         .club-president {
             font-size: 0.9rem;
             color: #666;
         }
-
         .overlay {
             display: none;
             position: fixed;
@@ -135,7 +116,6 @@
             background-color: rgba(0, 0, 0, 0.7);
             z-index: 1000;
         }
-
         .floating-card {
             display: none;
             position: fixed;
@@ -151,38 +131,31 @@
             overflow: hidden;
             transition: transform 0.3s ease-in-out;
         }
-
         .floating-card.show {
             transform: translate(-50%, -50%) scale(1);
         }
-
         .floating-image {
             width: 100%;
             height: 200px;
             object-fit: cover;
         }
-
         .floating-content {
             padding: 2rem;
         }
-
         .floating-title {
             color: var(--primary-color);
             font-size: 1.5rem;
             margin-bottom: 0.5rem;
         }
-
         .floating-president {
             font-size: 1rem;
             color: #666;
             margin-bottom: 1rem;
         }
-
         .floating-description {
             font-size: 1rem;
             line-height: 1.6;
         }
-
         .close-btn {
             position: absolute;
             top: 10px;
@@ -194,7 +167,6 @@
             border: none;
             padding: 0;
         }
-
         @media screen and (max-width: 768px) {
             .nav-links {
                 display: none;
@@ -206,18 +178,24 @@
                 background-color: var(--primary-color);
                 padding: 1rem;
             }
-
             .nav-links.show {
                 display: flex;
             }
-
             .nav-links li {
                 margin: 0.5rem 0;
             }
-
             .hamburger {
                 display: flex;
             }
+        }
+        .floating-card {
+            max-height: 80vh; /* 화면 높이의 80%로 제한 */
+            overflow-y: auto; /* 세로 스크롤 추가 */
+        }
+
+        .floating-content {
+            max-height: calc(80vh - 200px); /* 이미지 높이를 고려하여 조정 */
+            overflow-y: auto; /* 내용이 넘칠 경우 스크롤 추가 */
         }
     </style>
 </head>
@@ -230,8 +208,7 @@
         <li><a th:href="@{/club/list}">동아리 홍보</a></li>
         <li><a th:href="@{/post/list}">커뮤니티</a></li>
         <li th:unless="${session.user}"><a th:href="@{/user/login}">Login</a></li>
-        <li th:if="${session.user}"><a th:href="@{/user/profile}"
-                                       th:text="${session.user.firstName}"></a></li>
+        <li th:if="${session.user}"><a th:href="@{/user/profile}" th:text="${session.user.firstName}"></a></li>
     </ul>
     <div class="hamburger">
         <span></span>
@@ -242,8 +219,6 @@
 <main>
     <h2>동아리 목록</h2>
     <div class="club-list">
-
-
         <div class="club-card" data-image="soccer.png" data-description="🔥 매운맛과 함께하는 즐거움! 마라마라왕에 오신 것을 환영합니다! 🔥
 
                                                                             마라마라왕은 마라탕을 사랑하는 사람들의 모임으로, 맛있는 음식을 함께 즐기며 소통하는 동아리입니다. 우리 동아리는 매운맛에 도전하며 새로운 마라탕 맛집을 탐방하고, 다양한 재료와 조합으로 나만의 마라탕을 연구하는 것을 좋아합니다.">
@@ -389,8 +364,6 @@
                 <p class="club-president">회장: 여승용</p>
             </div>
         </div>
-
-
     </div>
 </main>
 <div class="overlay"></div>
@@ -410,7 +383,6 @@
         const overlay = document.querySelector('.overlay');
         const floatingCard = document.querySelector('.floating-card');
         const closeBtn = document.querySelector('.close-btn');
-        const floatingImage = floatingCard.querySelector('.floating-image');
         const floatingTitle = floatingCard.querySelector('.floating-title');
         const floatingPresident = floatingCard.querySelector('.floating-president');
         const floatingDescription = floatingCard.querySelector('.floating-description');
