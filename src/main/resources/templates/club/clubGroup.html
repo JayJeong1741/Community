@@ -5,7 +5,6 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>MJC Community - 동아리 목록</title>
     <style>
-        /* 기존 스타일 그대로 유지 */
         :root {
             --primary-color: #1f4e79;
             --secondary-color: #63aad6;
@@ -98,6 +97,7 @@
             box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
             overflow: hidden;
             transition: box-shadow 0.3s ease;
+            cursor: pointer;
         }
 
         .club-card:hover {
@@ -123,6 +123,76 @@
         .club-president {
             font-size: 0.9rem;
             color: #666;
+        }
+
+        .overlay {
+            display: none;
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background-color: rgba(0, 0, 0, 0.7);
+            z-index: 1000;
+        }
+
+        .floating-card {
+            display: none;
+            position: fixed;
+            top: 50%;
+            left: 50%;
+            transform: translate(-50%, -50%) scale(0.1);
+            background-color: var(--card-background);
+            border-radius: 8px;
+            box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2);
+            z-index: 1001;
+            max-width: 80%;
+            width: 600px;
+            overflow: hidden;
+            transition: transform 0.3s ease-in-out;
+        }
+
+        .floating-card.show {
+            transform: translate(-50%, -50%) scale(1);
+        }
+
+        .floating-image {
+            width: 100%;
+            height: 200px;
+            object-fit: cover;
+        }
+
+        .floating-content {
+            padding: 2rem;
+        }
+
+        .floating-title {
+            color: var(--primary-color);
+            font-size: 1.5rem;
+            margin-bottom: 0.5rem;
+        }
+
+        .floating-president {
+            font-size: 1rem;
+            color: #666;
+            margin-bottom: 1rem;
+        }
+
+        .floating-description {
+            font-size: 1rem;
+            line-height: 1.6;
+        }
+
+        .close-btn {
+            position: absolute;
+            top: 10px;
+            right: 10px;
+            font-size: 1.5rem;
+            cursor: pointer;
+            color: var(--primary-color);
+            background: none;
+            border: none;
+            padding: 0;
         }
 
         @media screen and (max-width: 768px) {
@@ -172,41 +242,131 @@
 <main>
     <h2>동아리 목록</h2>
     <div class="club-list">
-        <div class="club-card">
+        <div class="club-card" data-image="band.png" data-description="밴드 동아리는 음악을 사랑하는 학생들이 모여 다양한 장르의 음악을 연주하고 공연하는 동아리입니다. 초보자부터 숙련자까지 모두 환영합니다. 정기적인 공연과 음악 페스티벌 참가 등 다양한 활동을 통해 음악적 역량을 키우고 있습니다.">
             <img th:src="@{/css/band.png}" alt="밴드 이미지" class="club-image">
             <div class="club-content">
                 <h3 class="club-title">밴드</h3>
                 <p class="club-president">회장: 김철수</p>
             </div>
         </div>
-        <div class="club-card">
+        <div class="club-card" data-image="basketball.png" data-description="농구 동아리는 농구를 좋아하는 학생들이 모여 기술을 향상시키고 친목을 도모하는 동아리입니다. 정기적인 연습과 교내 대회 참가 활동을 합니다. 또한, 다른 학교와의 친선 경기를 통해 실력을 키우고 있습니다.">
             <img th:src="@{/css/basketball.png}" alt="농구 이미지" class="club-image">
             <div class="club-content">
                 <h3 class="club-title">농구</h3>
                 <p class="club-president">회장: 이영희</p>
             </div>
         </div>
-        <div class="club-card">
+        <div class="club-card" data-image="photo.png" data-description="사진 동아리는 사진 촬영에 관심 있는 학생들이 모여 기술을 배우고 작품을 공유하는 동아리입니다. 정기적인 촬영 여행과 전시회 활동을 합니다. 전문 사진작가의 특강과 워크샵을 통해 사진 기술을 향상시키고 있습니다.">
             <img th:src="@{/css/photo.png}" alt="사진 이미지" class="club-image">
             <div class="club-content">
                 <h3 class="club-title">사진</h3>
                 <p class="club-president">회장: 박지훈</p>
             </div>
         </div>
-        <div class="club-card">
+        <div class="club-card" data-image="soccer.png" data-description="축구 동아리는 축구를 사랑하는 학생들이 모여 기량을 향상시키고 팀워크를 기르는 동아리입니다. 주기적인 연습과 타 학교와의 친선 경기를 진행합니다. 또한, 지역 축구 대회에 참가하여 실전 경험을 쌓고 있습니다.">
             <img th:src="@{/css/soccer.png}" alt="축구 이미지" class="club-image">
             <div class="club-content">
                 <h3 class="club-title">축구</h3>
                 <p class="club-president">회장: 오 건</p>
             </div>
         </div>
+
+        <div class="club-card" data-image="soccer.png" data-description="우리 봉사동아리는 ‘나눔과 실천’을 통해 더 따뜻한 세상을 만들어가고자 합니다. 지역사회의 소외된 이웃을 돕고, 환경을 지키기 위한 다양한 활동을 진행하며, 서로의 가치를 존중하고 성장하는 문화를 추구합니다.
+
+주요 활동으로는 지역 아동센터 학습 지원, 어르신 돌봄 봉사, 환경정화 캠페인 등이 있으며, 정기적인 봉사 외에도 다양한 이벤트와 프로젝트를 통해 지역사회에 기여하고 있습니다.
+
+봉사는 단순한 도움을 넘어 함께 행복을 만들어가는 과정입니다. 여러분도 이 따뜻한 여정에 함께하며 나눔의 기쁨을 경험해보세요!">
+            <img th:src="@{/css/volunteer.png}" alt="봉사 이미지" class="club-image">
+            <div class="club-content">
+                <h3 class="club-title">봉사</h3>
+                <p class="club-president">회장: 여승용</p>
+            </div>
+        </div>
+
+        <div class="club-card" data-image="soccer.png" data-description="🔥 매운맛과 함께하는 즐거움! 마라마라왕에 오신 것을 환영합니다! 🔥
+
+마라마라왕은 마라탕을 사랑하는 사람들의 모임으로, 맛있는 음식을 함께 즐기며 소통하는 동아리입니다. 우리 동아리는 매운맛에 도전하며 새로운 마라탕 맛집을 탐방하고, 다양한 재료와 조합으로 나만의 마라탕을 연구하는 것을 좋아합니다.">
+            <img th:src="@{/css/mara.png}" alt="마라마라왕 이미지" class="club-image">
+            <div class="club-content">
+                <h3 class="club-title">마라마라왕</h3>
+                <p class="club-president">회장: 윤지희</p>
+            </div>
+        </div>
+
+        <div class="club-card" data-image="soccer.png" data-description="✨ 롤체, 전략과 운의 조화! 롤체 동아리에 오신 것을 환영합니다! ✨
+
+우리 동아리는 **'리그 오브 레전드: 전략적 팀 전투(TFT, 롤체)'**를 즐기며 서로의 전략을 공유하고 실력을 키워나가는 게임 동아리입니다. 메타 분석, 덱 조합 연구, 친선 대회 등 다양한 활동을 통해 게임을 더 깊이 즐기고, 함께 성장하는 것을 목표로 하고 있습니다.
+
+주요 활동
+🎮 정기 친선 대회: 회원들 간의 TFT 대회를 열어 실력을 겨루고 우승자를 뽑습니다.
+📊 메타 분석 모임: 최신 패치와 메타를 분석하며 승률 높은 조합과 전략을 연구합니다.
+🤝 팀워크 강화: 듀오 모드로 팀워크를 다지고 함께 실력을 키웁니다.
+🌟 롤체 리그: 정기 시즌제를 운영하며 랭킹 시스템을 도입해 경쟁의 재미를 더합니다.
+
+우리의 목표
+롤체 동아리는 단순히 게임을 즐기는 것을 넘어, 전략적 사고력과 소통 능력을 키우며 게임 속에서뿐만 아니라 현실에서도 함께 성장하는 것을 지향합니다.
+
+게임을 좋아하고, 새로운 전략을 함께 연구하며 실력을 키우고 싶다면?
+🔥 운도 실력! 실력도 운! 롤체는 마법이다!🔥
+        우리와 함께 롤체의 세계로 뛰어들어 보세요!">
+            <img th:src="@{/css/teemo.png}" alt="꼬마 전설이 이미지" class="club-image">
+            <div class="club-content">
+                <h3 class="club-title">꼬마 전설이</h3>
+                <p class="club-president">회장: 박 진</p>
+            </div>
+        </div>
+
+        <div class="club-card" data-image="soccer.png" data-description="
+
+🍴 함께 먹으면 두 배로 맛있는, 맛집 탐방 동아리! 🍴
+
+        맛집 탐방 동아리는 전국 곳곳의 숨겨진 맛집을 발굴하고, 다양한 음식을 함께 즐기는 미식가들의 모임입니다. 우리는 단순히 맛있는 음식을 먹는 것을 넘어, 음식에 담긴 이야기와 문화를 공유하며 맛에 대한 시야를 넓혀갑니다.
+
+        주요 활동
+
+        🌟 지역별 맛집 투어: 정기적으로 한 지역을 선정해 테마별 맛집을 탐방합니다.
+        🍜 테마별 음식 탐험: 국수, 디저트, 길거리 음식 등 특정 테마로 다양한 맛을 경험합니다.
+        📸 푸드로그 작성: 맛집에서의 경험을 사진과 리뷰로 남겨 동아리 블로그나 SNS에 공유합니다.
+        🤝 미식 교류회: 회원들이 직접 추천하는 맛집 리스트를 공유하며 새로운 미식 경험을 나눕니다.
+        우리의 목표
+        맛집 탐방 동아리는 단순히 맛있는 음식을 먹는 것을 넘어, 함께한 순간을 소중히 여기고, 다양한 음식을 통해 더 넓은 세상을 경험하는 것을 목표로 합니다.
+
+        맛있는 음식, 그리고 따뜻한 사람들과의 교류를 꿈꾸신다면?
+        🍽 좋은 사람들과 함께라면 어디든 맛집! 🍽
+        지금 바로 동아리 가입하고 미식 여행을 시작해보세요!
+
+        ">
+            <img th:src="@{/css/mat.png}" alt="축구 이미지" class="club-image">
+            <div class="club-content">
+                <h3 class="club-title">대식가들</h3>
+                <p class="club-president">회장: 오용호</p>
+            </div>
+        </div>
+
+
     </div>
 </main>
+<div class="overlay"></div>
+<div class="floating-card">
+    <button class="close-btn">&times;</button>
+    <div class="floating-content">
+        <h3 class="floating-title"></h3>
+        <p class="floating-president"></p>
+        <p class="floating-description"></p>
+    </div>
+</div>
 <script>
-    // 네비게이션 햄버거 메뉴
     document.addEventListener('DOMContentLoaded', function () {
         const hamburger = document.querySelector('.hamburger');
         const navLinks = document.querySelector('.nav-links');
+        const clubCards = document.querySelectorAll('.club-card');
+        const overlay = document.querySelector('.overlay');
+        const floatingCard = document.querySelector('.floating-card');
+        const closeBtn = document.querySelector('.close-btn');
+        const floatingImage = floatingCard.querySelector('.floating-image');
+        const floatingTitle = floatingCard.querySelector('.floating-title');
+        const floatingPresident = floatingCard.querySelector('.floating-president');
+        const floatingDescription = floatingCard.querySelector('.floating-description');
 
         hamburger.addEventListener('click', function () {
             navLinks.classList.toggle('show');
@@ -217,6 +377,33 @@
                 navLinks.classList.remove('show');
             }
         });
+
+        clubCards.forEach(card => {
+            card.addEventListener('click', function() {
+                const title = this.querySelector('.club-title').textContent;
+                const president = this.querySelector('.club-president').textContent;
+                const description = this.getAttribute('data-description');
+
+                floatingTitle.textContent = title;
+                floatingPresident.textContent = president;
+                floatingDescription.textContent = description;
+
+                overlay.style.display = 'block';
+                floatingCard.style.display = 'block';
+                setTimeout(() => floatingCard.classList.add('show'), 10);
+            });
+        });
+
+        function closeFloatingCard() {
+            floatingCard.classList.remove('show');
+            setTimeout(() => {
+                overlay.style.display = 'none';
+                floatingCard.style.display = 'none';
+            }, 300);
+        }
+
+        closeBtn.addEventListener('click', closeFloatingCard);
+        overlay.addEventListener('click', closeFloatingCard);
     });
 </script>
 </body>
