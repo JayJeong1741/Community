@@ -307,6 +307,7 @@
         <a th:href="@{/club/update(id=${post.id})}">수정</a>
         <form th:action="@{/club/delete}" method="post" style="display:inline;">
             <input type="hidden" name="id" th:value="${post.id}"/>
+            <input type="hidden" name="_csrf" th:value="${session.csrf}"/>
             <button type="submit">삭제</button>
         </form>
     </div>
